@@ -2,7 +2,7 @@
 {
     public class Transaction
     {
-        public string TransactionID { get; set; }
+        public string TransactionId { get; set; }
 
         public DateTime DateCreated { get; set; }
 

@@ -20,9 +20,16 @@ namespace FinancialManagementSystem.api.Data
                 .HasForeignKey(a => a.CustomerId);
 
             modelBuilder.Entity<Account>()
-                .HasMany(a => a.Transactions)
-                .WithOne(t => t.Account)
-                .HasForeignKey(t => t.AccountId);
+           .HasOne(a => a.Customer)
+           .WithMany(c => c.Accounts)
+           .HasForeignKey(a => a.CustomerId)
+           .OnDelete(DeleteBehavior.Cascade);
+
+            modelBuilder.Entity<Transaction>()
+                .HasOne(t => t.Account)
+                .WithMany(a => a.Transactions)
+                .HasForeignKey(t => t.AccountId)
+                .OnDelete(DeleteBehavior.Cascade);
         }
     }
 }

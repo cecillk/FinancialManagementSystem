@@ -15,10 +15,16 @@ namespace FinancialManagementSystem.api.Data.Entities
         [Required]
         public string PhoneNumber { get; set; }
 
-        [EmailAddress]
+        [EmailAddress(ErrorMessage = "Invalid Email")]
         public string Email { get; set; }
 
+        public DateTime DateOfBirth{ get; set; }
+
         public bool IsActive { get; set; }
+
+        public string Password { get; set; }
+
+        public DateTime CreatedAt { get; set; }
 
         public ICollection<Account> Accounts { get; set; }
 
