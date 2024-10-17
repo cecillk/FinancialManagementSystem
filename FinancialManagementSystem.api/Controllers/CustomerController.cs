@@ -37,8 +37,8 @@ namespace FinancialManagementSystem.api.Controllers
             return ActionResultHelper.ToActionResult(response);
         }
 
-        [HttpGet("Get-All-Customers")]
-        public async Task<IActionResult> GetAllCustomersAsync(BaseFilter filter)
+        [HttpGet]
+        public async Task<IActionResult> GetAllCustomersAsync([FromQuery]BaseFilter filter)
         {
             var response = await customerService.GetAllCustomersAsync(filter);
 
@@ -50,7 +50,7 @@ namespace FinancialManagementSystem.api.Controllers
         public async Task<IActionResult> UpdateCustomerAsync(UpdateCustomerRequest request)
         {
             var response = await customerService.UpdateCustomerAsync(request);
-
+            
             return ActionResultHelper.ToActionResult(response);
         }
 

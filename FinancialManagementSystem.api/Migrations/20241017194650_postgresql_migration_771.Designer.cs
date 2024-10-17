@@ -3,6 +3,7 @@ using System;
 using FinancialManagementSystem.api.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
@@ -11,9 +12,11 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace FinancialManagementSystem.api.Migrations
 {
     [DbContext(typeof(FinancialDbContext))]
-    partial class FinancialDbContextModelSnapshot : ModelSnapshot
+    [Migration("20241017194650_postgresql_migration_771")]
+    partial class postgresql_migration_771
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -44,9 +47,6 @@ namespace FinancialManagementSystem.api.Migrations
                     b.Property<string>("CustomerId")
                         .IsRequired()
                         .HasColumnType("text");
-
-                    b.Property<bool>("IsActive")
-                        .HasColumnType("boolean");
 
                     b.HasKey("AccountId");
 

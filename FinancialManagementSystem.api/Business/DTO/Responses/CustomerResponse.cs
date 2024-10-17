@@ -6,20 +6,11 @@ namespace FinancialManagementSystem.api.Business.DTO.Responses
     {
         public string CustomerId { get; set; }
 
-        
         public string FirstName { get; set; }
-
        
         public string LastName { get; set; }
 
-        
         public string PhoneNumber { get; set; }
-
-        public string AccountType { get; set; }
-
-        public decimal Balance { get; set; } = 0;
-
-        public string AccountNumber { get; set; }
 
         public string Email { get; set; }
         public DateTime DateOfBirth { get; set; }

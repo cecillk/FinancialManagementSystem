@@ -13,6 +13,8 @@
 
         public string CustomerId { get; set; }
         public Customer Customer { get; set; }
+
+        public bool IsActive { get; set; }
         public ICollection<Transaction> Transactions { get; set; }
 
     }

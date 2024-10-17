@@ -1,5 +1,131 @@
 [
   {
+    "ContainingType": "FinancialManagementSystem.api.Controllers.AccountController",
+    "Method": "GetAllAccountsAsync",
+    "RelativePath": "api/Account",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "PageSize",
+        "Type": "System.Int32",
+        "IsRequired": false
+      },
+      {
+        "Name": "PageNumber",
+        "Type": "System.Int32",
+        "IsRequired": false
+      },
+      {
+        "Name": "Search",
+        "Type": "System.String",
+        "IsRequired": false
+      },
+      {
+        "Name": "CreatedAt",
+        "Type": "System.Nullable\u00601[[System.DateTime, System.Private.CoreLib, Version=8.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]]",
+        "IsRequired": false
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "FinancialManagementSystem.api.Controllers.AccountController",
+    "Method": "CreateAsync",
+    "RelativePath": "api/Account/Create-Account",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "request",
+        "Type": "FinancialManagementSystem.api.Business.DTO.Requests.AddAccountResquest",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "FinancialManagementSystem.api.Controllers.AccountController",
+    "Method": "DeleteAsync",
+    "RelativePath": "api/Account/Delete-Account",
+    "HttpMethod": "DELETE",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "AccountId",
+        "Type": "System.String",
+        "IsRequired": false
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "FinancialManagementSystem.api.Controllers.AccountController",
+    "Method": "GetAccountAsync",
+    "RelativePath": "api/Account/Get-Account",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "CustomerId",
+        "Type": "System.String",
+        "IsRequired": false
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "FinancialManagementSystem.api.Controllers.AccountController",
+    "Method": "UpdateAccountAsync",
+    "RelativePath": "api/Account/Update-Account",
+    "HttpMethod": "PUT",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "request",
+        "Type": "FinancialManagementSystem.api.Business.DTO.Requests.UpdateAccountRequest",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "FinancialManagementSystem.api.Controllers.CustomerController",
+    "Method": "GetAllCustomersAsync",
+    "RelativePath": "api/Customer",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "PageSize",
+        "Type": "System.Int32",
+        "IsRequired": false
+      },
+      {
+        "Name": "PageNumber",
+        "Type": "System.Int32",
+        "IsRequired": false
+      },
+      {
+        "Name": "Search",
+        "Type": "System.String",
+        "IsRequired": false
+      },
+      {
+        "Name": "CreatedAt",
+        "Type": "System.Nullable\u00601[[System.DateTime, System.Private.CoreLib, Version=8.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]]",
+        "IsRequired": false
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
     "ContainingType": "FinancialManagementSystem.api.Controllers.CustomerController",
     "Method": "CreateAsync",
     "RelativePath": "api/Customer/Create-Customer",
@@ -33,22 +159,6 @@
   },
   {
     "ContainingType": "FinancialManagementSystem.api.Controllers.CustomerController",
-    "Method": "GetAllCustomersAsync",
-    "RelativePath": "api/Customer/Get-All-Customers",
-    "HttpMethod": "GET",
-    "IsController": true,
-    "Order": 0,
-    "Parameters": [
-      {
-        "Name": "filter",
-        "Type": "FinancialManagementSystem.api.Business.Common.BaseFilter",
-        "IsRequired": true
-      }
-    ],
-    "ReturnTypes": []
-  },
-  {
-    "ContainingType": "FinancialManagementSystem.api.Controllers.CustomerController",
     "Method": "GetCustomerAsync",
     "RelativePath": "api/Customer/Get-Customer",
     "HttpMethod": "GET",
@@ -75,6 +185,38 @@
         "Name": "request",
         "Type": "FinancialManagementSystem.api.Business.DTO.Requests.UpdateCustomerRequest",
         "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "FinancialManagementSystem.api.Controllers.TransactionController",
+    "Method": "CreateAsync",
+    "RelativePath": "api/Transaction/Create-Transaction",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "request",
+        "Type": "FinancialManagementSystem.api.Business.DTO.Requests.AddTransactionRequest",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "FinancialManagementSystem.api.Controllers.TransactionController",
+    "Method": "GetTransactionAsync",
+    "RelativePath": "api/Transaction/Get-Transaction",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "TransactionId",
+        "Type": "System.String",
+        "IsRequired": false
       }
     ],
     "ReturnTypes": []

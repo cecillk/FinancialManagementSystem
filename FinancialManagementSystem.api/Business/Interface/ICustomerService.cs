@@ -13,7 +13,7 @@ namespace FinancialManagementSystem.api.Business.Interface
 
         Task<ServiceResponse<CustomerResponse>> DeleteCustomerByIdAsync(string customerId);
 
-        Task<ServiceResponse<Customer>> GetCustomerbyIdAsync(string customerId);
+        Task<ServiceResponse<CustomerResponse>> GetCustomerbyIdAsync(string customerId);
 
         Task<ServiceResponse<PagedResult<CustomerResponse>>> GetAllCustomersAsync(BaseFilter filter);
     }

@@ -3,8 +3,11 @@
     public class UpdateAccountRequest
     {
         public string AccountId { get; set; }
-        public string AccountType { get; set; }
+        
+        public decimal Balance { get; set; }
 
-        public decimal Balance { get; set; } = 0;
+        public AccountType AccountType { get; set; }
     }
+
+
 }

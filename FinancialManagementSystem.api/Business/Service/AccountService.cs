@@ -30,7 +30,9 @@ namespace FinancialManagementSystem.api.Business.Service
                     return ResponseHelper.BadRequestResponse<AccountResponse>("Customer does not exist");
                 }
 
+
                 string accountType = GetAccountType(request.AccountType);
+
 
                 if (request.InitialDeposit < 0)
                 {
@@ -48,6 +50,8 @@ namespace FinancialManagementSystem.api.Business.Service
                     Balance = balance,
                     AccountType = accountType,
                     CustomerId = request.CustomerId,
+                    CreatedAt = DateTime.UtcNow,
+                    IsActive = true
                 };
 
                 await dbContext.Accounts.AddAsync(newAccount);
@@ -80,7 +84,7 @@ namespace FinancialManagementSystem.api.Business.Service
 
                 var accountExists = await dbContext.Accounts
                .AsNoTracking()
-               .FirstOrDefaultAsync(a => a.AccountId == accountId);
+               .FirstOrDefaultAsync(a => a.AccountId == accountId && a.IsActive);
 
                 if (accountExists is null)
                 {
@@ -89,23 +93,26 @@ namespace FinancialManagementSystem.api.Business.Service
                     return ResponseHelper.BadRequestResponse<AccountResponse>("Account does not exist");
                 }
 
-                dbContext.Accounts.Remove(accountExists);
+                accountExists.IsActive = false;
+
+
+                dbContext.Accounts.Update(accountExists);
                 bool isSaved = await dbContext.SaveChangesAsync() > 0;
 
-                if (!isSaved) 
+                if (!isSaved)
                 {
                     logger.LogDebug("Failed to delete account");
 
-                    return ResponseHelper.FailedDependencyResponse<AccountResponse>("Failed to delete account");
+                    return ResponseHelper.FailedDependencyResponse<AccountResponse>("Failed to disable account");
                 }
 
-                logger.LogInformation("Account successfuly deleted");
+                logger.LogInformation("Account successfuly disabled");
 
                 return ResponseHelper.OkResponse(accountExists.Adapt<AccountResponse>());
             }
             catch (Exception e)
             {
-                logger.LogError(e, "An Error occured while delrting account {Ex}", e.Message);
+                logger.LogError(e, "An Error occured while disabled account {Ex}", e.Message);
 
                 return ResponseHelper.InternalServerErrorResponse<AccountResponse>("Something really bad happened!. Please try agian later");
             }
@@ -121,11 +128,11 @@ namespace FinancialManagementSystem.api.Business.Service
               .AsNoTracking()
               .FirstOrDefaultAsync(a => a.CustomerId == customerId);
 
-                if (accountExists is null)
+                if (accountExists is null || !accountExists.IsActive)
                 {
                     logger.LogDebug("Account with customerId  {customerId} does not exist", customerId);
 
-                    return ResponseHelper.BadRequestResponse<AccountResponse>("Account does not exist");
+                    return ResponseHelper.BadRequestResponse<AccountResponse>("Account does not exist or is disabled");
                 }
 
                 logger.LogInformation("Customer with accountId Found {Id}", customerId);
@@ -203,15 +210,17 @@ namespace FinancialManagementSystem.api.Business.Service
                     .AsNoTracking()
                     .FirstOrDefaultAsync(a => a.AccountId == request.AccountId);
 
-                if (updateAccount is null)
+                if (updateAccount is null || updateAccount.IsActive)
                 {
                     logger.LogDebug("Cutomer does not exist or is not active {Request}", request.AccountId)
     ;
                     return ResponseHelper.NotFoundResponse<AccountResponse>("customer not active or is not found");
                 }
 
-                updateAccount.AccountType = request.AccountType ?? updateAccount.AccountType;
-                
+                var accountType = GetAccountType(request.AccountType);
+
+                updateAccount.AccountType = accountType ?? updateAccount.AccountType;
+
 
                 dbContext.Accounts.Update(updateAccount);
                 bool isSaved = await dbContext.SaveChangesAsync() > 0;

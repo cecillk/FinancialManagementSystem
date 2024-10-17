@@ -23,7 +23,7 @@ namespace FinancialManagementSystem.api.Business.Service
                 var accountExists = await dbContext.Accounts
                .AsNoTracking()
                .FirstOrDefaultAsync(a => a.AccountId == request.AccountId);
-
+                
                 if (accountExists is null)
                 {
                     logger.LogDebug("Account with Id {accountId} does not exist", request.AccountId);
@@ -69,16 +69,19 @@ namespace FinancialManagementSystem.api.Business.Service
 
                 accountExists.Balance = newBalance;
 
+                var transactionType = GetTransactionType(request.TransactionType);
+
                 var transaction = new Transaction
                 {
                     Amount = request.Amount,
                     AccountId = request.AccountId,
                     DateCreated = DateTime.UtcNow,
                     TransactionId = Guid.NewGuid().ToString("N"),
-                    TransactionType = CommonConstants.TransactionType.Deposit,
+                    TransactionType = transactionType,
                 };
 
                 await dbContext.Transactions.AddAsync(transaction);
+                 dbContext.Accounts.Update(accountExists);
 
                 bool isSaved = await dbContext.SaveChangesAsync() > 0;
 
@@ -129,6 +132,18 @@ namespace FinancialManagementSystem.api.Business.Service
 
                 return ResponseHelper.InternalServerErrorResponse<Transaction>("Something Really bad happened! Please try again later");
             }
+        }
+
+
+        private static string GetTransactionType(TransactionType transactionType)
+        {
+            return transactionType switch
+            {
+                TransactionType.Deposit => CommonConstants.TransactionType.Deposit,
+                TransactionType.Withdrawal => CommonConstants.TransactionType.Withdraw,
+                
+                _ => throw new ArgumentException("Invalid Transaction Type")
+            };
         }
     }
 }

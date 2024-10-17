@@ -36,8 +36,8 @@ namespace FinancialManagementSystem.api.Controllers
             return ActionResultHelper.ToActionResult(response);
         }
 
-        [HttpGet("Get-All-Accounts")]
-        public async Task<IActionResult> GetAllAccountsAsync(BaseFilter filter)
+        [HttpGet]
+        public async Task<IActionResult> GetAllAccountsAsync([FromQuery]BaseFilter filter)
         {
             var response = await accountService.GetAllAccountsAsync(filter);
 

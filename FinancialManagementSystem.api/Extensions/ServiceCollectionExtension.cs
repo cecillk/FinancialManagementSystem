@@ -1,4 +1,5 @@
-﻿using FinancialManagementSystem.api.Business.Interface;
+﻿using FinancialManagementSystem.api.Business.Common;
+using FinancialManagementSystem.api.Business.Interface;
 using FinancialManagementSystem.api.Business.Service;
 
 namespace FinancialManagementSystem.api.Extensions
@@ -16,6 +17,7 @@ namespace FinancialManagementSystem.api.Extensions
             services.AddScoped<ITransactionService, TransactionService>();
             services.AddScoped<IAccountService, AccountService>();
             services.AddScoped<IPasswordHasher, PasswordHasher>();
+            services.AddScoped<GenerateAccountNumber>();
 
             services.AddCors(options =>
             {

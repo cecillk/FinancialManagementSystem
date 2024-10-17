@@ -12,6 +12,7 @@ namespace FinancialManagementSystem.api.Business.DTO.Requests
 
         public string? PhoneNumber { get; set; }
 
+        [EmailAddress(ErrorMessage = "Invalid Email")]
         public string? Email { get; set; }
 
         public DateTime? DateOfBirth { get; set; }

@@ -21,13 +21,13 @@ public class CustomerService(
         {
             logger.LogInformation("Creating a new customer");
 
-            var existingCustomer = await dbContext.Customers.AsNoTracking().AnyAsync(c => c.PhoneNumber == request.PhoneNumber && c.Email == request.Email);
+            var existingCustomer = await dbContext.Customers.AsNoTracking().AnyAsync(c => c.PhoneNumber == request.PhoneNumber || c.Email == request.Email);
 
             if (existingCustomer)
             {
                 logger.LogDebug("Customer with {PhoneNumber} already exists", request.PhoneNumber);
 
-                return ResponseHelper.BadRequestResponse<CustomerResponse>("Customer with PhoneNumber already exists");
+                return ResponseHelper.BadRequestResponse<CustomerResponse>("Customer with PhoneNumber or email already exists");
             }
 
             if (string.IsNullOrWhiteSpace(request.Password))
@@ -55,6 +55,7 @@ public class CustomerService(
                 FirstName = request.FirstName,
                 LastName = request.LastName,
                 Email = request.Email,
+                PhoneNumber = request.PhoneNumber,
                 Password = passwordHash,
                 DateOfBirth = request.DateOfBirth,
                 IsActive = true,
@@ -80,7 +81,7 @@ public class CustomerService(
                     TransactionId = Guid.NewGuid().ToString(),
                     Amount = request.DepositAmount,
                     DateCreated = DateTime.UtcNow,
-                    TransactionType = "Deposit",
+                    TransactionType = CommonConstants.TransactionType.Deposit,
                     AccountId = account.AccountId
                 };
 
@@ -90,6 +91,7 @@ public class CustomerService(
             newCustomer.Accounts = new List<Account> { account };
 
             await dbContext.Customers.AddAsync(newCustomer);
+            await dbContext.Accounts.AddAsync(account);
             var isSaved = await dbContext.SaveChangesAsync() > 0;
 
             if (!isSaved) {
@@ -205,7 +207,7 @@ public class CustomerService(
         }
     }
 
-    public async Task<ServiceResponse<Customer>> GetCustomerbyIdAsync(string customerId)
+    public async Task<ServiceResponse<CustomerResponse>> GetCustomerbyIdAsync(string customerId)
     {
         try
         {
@@ -219,18 +221,18 @@ public class CustomerService(
             {
                 logger.LogDebug("Customer with {customerId} does not exist", customerId);
 
-                return ResponseHelper.BadRequestResponse<Customer>("Customer does not exist");
+                return ResponseHelper.BadRequestResponse<CustomerResponse>("Customer does not exist");
             }
 
             logger.LogInformation("Customer with Id Found {Id}", customerId);
 
-            return ResponseHelper.OkResponse(existingCustomer);
+            return ResponseHelper.OkResponse(existingCustomer.Adapt<CustomerResponse>());
         }
         catch(Exception e)
         {
             logger.LogError(e, "Error getting customer by Id {Ex}", e.Message);
 
-            return ResponseHelper.InternalServerErrorResponse<Customer>("Something Really bad happened! Please try again later");
+            return ResponseHelper.InternalServerErrorResponse<CustomerResponse>("Something Really bad happened! Please try again later");
         }
     }
 

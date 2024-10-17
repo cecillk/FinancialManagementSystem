@@ -16,7 +16,7 @@ namespace FinancialManagementSystem.api.Business.DTO.Requests
 
     public enum TransactionType
     {
-        Deposit,
+        Deposit = 1,
         Withdrawal
     }
 }

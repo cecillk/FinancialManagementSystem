@@ -8,5 +8,7 @@
         public string AccountNumber { get; set; }
         public DateTime CreatedAt { get; set; }
         public string CustomerId { get; set; }
+
+        public bool IsActive { get; set; }
     }
 }
