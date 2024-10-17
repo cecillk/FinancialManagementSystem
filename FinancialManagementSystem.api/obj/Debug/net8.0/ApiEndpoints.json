@@ -1,1 +1,82 @@
-[]
+[
+  {
+    "ContainingType": "FinancialManagementSystem.api.Controllers.CustomerController",
+    "Method": "CreateAsync",
+    "RelativePath": "api/Customer/Create-Customer",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "request",
+        "Type": "FinancialManagementSystem.api.Business.DTO.Requests.AddCustomerRequest",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "FinancialManagementSystem.api.Controllers.CustomerController",
+    "Method": "DeleteAsync",
+    "RelativePath": "api/Customer/Delete-Customer",
+    "HttpMethod": "DELETE",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "CustomerId",
+        "Type": "System.String",
+        "IsRequired": false
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "FinancialManagementSystem.api.Controllers.CustomerController",
+    "Method": "GetAllCustomersAsync",
+    "RelativePath": "api/Customer/Get-All-Customers",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "filter",
+        "Type": "FinancialManagementSystem.api.Business.Common.BaseFilter",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "FinancialManagementSystem.api.Controllers.CustomerController",
+    "Method": "GetCustomerAsync",
+    "RelativePath": "api/Customer/Get-Customer",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "customerId",
+        "Type": "System.String",
+        "IsRequired": false
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "FinancialManagementSystem.api.Controllers.CustomerController",
+    "Method": "UpdateCustomerAsync",
+    "RelativePath": "api/Customer/Update-Customer",
+    "HttpMethod": "PUT",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "request",
+        "Type": "FinancialManagementSystem.api.Business.DTO.Requests.UpdateCustomerRequest",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  }
+]

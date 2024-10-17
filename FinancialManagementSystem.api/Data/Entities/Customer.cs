@@ -5,7 +5,7 @@ namespace FinancialManagementSystem.api.Data.Entities
     public class Customer
     {
         public string CustomerId { get; set; }
-        
+
         [Required]
         public string FirstName { get; set; }
 
@@ -18,7 +18,7 @@ namespace FinancialManagementSystem.api.Data.Entities
         [EmailAddress(ErrorMessage = "Invalid Email")]
         public string Email { get; set; }
 
-        public DateTime DateOfBirth{ get; set; }
+        public DateTime DateOfBirth { get; set; }
 
         public bool IsActive { get; set; }
 
@@ -29,4 +29,9 @@ namespace FinancialManagementSystem.api.Data.Entities
         public ICollection<Account> Accounts { get; set; }
 
     }
+
+
+
+
 }
+

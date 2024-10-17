@@ -1,12 +1,30 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using FinancialManagementSystem.api.Business.Common;
+using FinancialManagementSystem.api.Business.DTO.Requests;
+using FinancialManagementSystem.api.Business.Interface;
+using Microsoft.AspNetCore.Mvc;
 
 namespace FinancialManagementSystem.api.Controllers
 {
-    public class TransactionController : Controller
+    [ApiController]
+    [Route("api/[controller]")]
+    public class TransactionController(ITransactionService transactionService) : ControllerBase
     {
-        public IActionResult Index()
+        [HttpPost("Create-Transaction")]
+
+        public async Task<IActionResult> CreateAsync(AddTransactionRequest request)
         {
-            return View();
+            var response = await transactionService.CreateTransactionAsync(request);
+
+            return ActionResultHelper.ToActionResult(response);
         }
+
+        [HttpGet("Get-Transaction")]
+        public async Task<IActionResult> GetTransactionAsync(string TransactionId)
+        {
+            var response = await transactionService.GetTransactionbyId(TransactionId);
+
+            return ActionResultHelper.ToActionResult(response);
+        }
+
     }
 }
