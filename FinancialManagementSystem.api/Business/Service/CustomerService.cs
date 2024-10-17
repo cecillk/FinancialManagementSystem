@@ -11,7 +11,8 @@ using System;
 public class CustomerService(
     ILogger<CustomerService> logger,
     FinancialDbContext dbContext,
-    IPasswordHasher passwordHasher
+    IPasswordHasher passwordHasher,
+    GenerateAccountNumber generateAccountNumber
     ) : ICustomerService
 {
     public async Task<ServiceResponse<CustomerResponse>> AddCustomerAsync(AddCustomerRequest request)
@@ -38,6 +39,16 @@ public class CustomerService(
 
             var passwordHash = passwordHasher.HashPassword(request.Password);
 
+            if (request.DepositAmount < 0)
+            {
+                logger.LogDebug("Initial deposit amount cannot be negative {Deposit}", request.DepositAmount);
+
+                return ResponseHelper.BadRequestResponse<CustomerResponse>("Amount cannot be less than zero");
+            }
+
+            var balance = request.DepositAmount > 0 ? request.DepositAmount : 0;
+
+
             var newCustomer = new Customer
             {
                 CustomerId = Guid.NewGuid().ToString("N"),
@@ -55,14 +66,14 @@ public class CustomerService(
             var account = new Account
             {
                 AccountId = Guid.NewGuid().ToString("N"),
-                AccountNumber = GenerateUniqueAccountNumber(),
-                Balance = 0,
+                AccountNumber = generateAccountNumber.GenerateUniqueAccountNumber(),
+                Balance = balance,
                 AccountType = accountType,
                 CustomerId = newCustomer.CustomerId,
                 CreatedAt = DateTime.UtcNow,    
             };
 
-            if (request.DepositAmount > 0)
+            if (balance > 0)
             {
                 var initialTransaction = new Transaction
                 {
@@ -266,22 +277,6 @@ public class CustomerService(
 
             return ResponseHelper.InternalServerErrorResponse<CustomerResponse>("Something really bad happened! Try again later");
         }
-    }
-
-
-    private string GenerateUniqueAccountNumber()
-    {
-        // Example simple account number generation logic (can be replaced with more sophisticated logic)
-        var random = new Random();
-        var accountNumber = random.Next(10000000, 99999999).ToString();
-
-        // Check if account number is unique
-        while (dbContext.Accounts.Any(a => a.AccountNumber == accountNumber))
-        {
-            accountNumber = random.Next(10000000, 99999999).ToString();
-        }
-
-        return accountNumber;
     }
 
 

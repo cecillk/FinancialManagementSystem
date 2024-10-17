@@ -1,8 +1,9 @@
 ﻿namespace FinancialManagementSystem.api.Business.DTO.Requests
 {
-    public class UpdateaccountRequest
+    public class UpdateAccountRequest
     {
-        public string Accounttype { get; set; }
+        public string AccountId { get; set; }
+        public string AccountType { get; set; }
 
         public decimal Balance { get; set; } = 0;
     }

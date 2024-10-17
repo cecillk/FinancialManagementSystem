@@ -3,12 +3,13 @@ using FinancialManagementSystem.api.Business.DTO.Requests;
 using FinancialManagementSystem.api.Business.DTO.Responses;
 using FinancialManagementSystem.api.Data.Entities;
 
+
 namespace FinancialManagementSystem.api.Business.Interface
 {
-    public interface ITransactionServices
+    public interface ITransactionService
     {
-        Task<ServiceResponse<TransactionResponse>> AddTransaction(AddTransactionRequest request);
+        Task<ServiceResponse<TransactionResponse>> CreateTransactionAsync(AddTransactionRequest request);
 
-        Task<ServiceResponse<TransactionResponse>> GetTransactionbyId(string Id);
+        Task<ServiceResponse<Transaction>> GetTransactionbyId(string TransactionId);
     }
 }

@@ -9,5 +9,12 @@
             public const string MoneyMarkets = "Money Markets Account";
             public const string  Certificate = "Certificate of Deposit Account";
         }
+
+
+        public static class TransactionType
+        {
+            public const string Deposit = "Deposit";
+            public const string Withdraw = "Withdrawal";
+        }
     }
 }
